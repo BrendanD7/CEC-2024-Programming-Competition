@@ -2,15 +2,15 @@ import pandas as pd
 import numpy as np
 
 # Method to calculate a weighted score for each day
-def calculate_score(data):
+def calculate_score(data, x, y):
     # Data is empty, return invalid
     if(data.empty):
         return -100
     
     # Retrieve values from Data
     value_world = data['value_world'].values[0]
-    value_oil = data['value_oil'].values[0]
-    value_metal = data['value_metal'].values[0]
+    value_oil = data['value_oil'].values[0] * resources[x, y]
+    value_metal = data['value_metal'].values[0] * resources[x, y]
     value_species = data['value_species'].values[0]
     value_coral = data['value_coral'].values[0]
     value_temperature = data['value_temperature'].values[0]
@@ -48,36 +48,13 @@ def find_best_position(data, start, scores, other_rig):
             if distance <= max_movement and rig_distance > 2:
                 # Calculate the score for this position
                 data_parse = data[(data['x'] == i) & (data['y'] == j)]
-                score = calculate_score(data_parse)
+                score = calculate_score(data_parse, i, j)
                 scores[i, j] = score
                 # Check if new best position
                 if score > max_score:
                     max_score = score
                     max_indices = (i,j)
     return max_indices
-
-# Method to determine if rig is idling in one place, and apply a reduction to resources if applicable
-def checkIndices(data, prev_idx, indicies_rig):
-    dailyReductionPercentage = 0.25
-    if prev_idx is not None and indicies_rig == prev_idx:
-            selected_row_resources = resources[indicies_rig[0], indicies_rig[1]]
-            reductionPercentage = selected_row_resources * (1 - dailyReductionPercentage)
-            
-            # Check if the new value goes below or equals to 0.1 
-            if reductionPercentage <= 0.1:
-                print("MUST MOVE LOCATIONS. NO MORE RESOURCES")
-            else:
-                print(f"Before: {resources[indicies_rig[0], indicies_rig[1]]}")
-                resources[indicies_rig[0], indicies_rig[1]] = reductionPercentage
-                print(f"After: {resources[indicies_rig[0], indicies_rig[1]]}")
-                selected_row = data[(data['x'] == indicies_rig[0]) & (data['y'] == indicies_rig[1])]
-                if not selected_row.empty:
-                    value_oil = selected_row['value_oil'].iloc[0]
-                    new_value = value_oil * reductionPercentage
-                    data.loc[(data['x'] == indicies_rig[0]) & (data['y'] == indicies_rig[1]), 'value_oil'] = new_value
-                    print(f"Value was continuous from the previous day, reduced by {dailyReductionPercentage * 100}% : new value = {new_value}")
-                else:
-                    print("Error: Selected row does not exist.")
 
 resources = np.ones((100, 100))
 
@@ -92,10 +69,6 @@ def read_files():
     
     # List of data
     days = []
-    
-    # Previous rig positions
-    prev_idx_rig_1 = None
-    prev_idx_rig_2 = None
     
     # Loop over all input data
     for i in range(1, 31):
@@ -134,14 +107,10 @@ def read_files():
         data['scores'] = scores_list
         days.append(data)
         
-        # Check if current best index equals the last index
-        checkIndices(combined_data, prev_idx_rig_1, indices_rig_1_tuple)
-        checkIndices(combined_data, prev_idx_rig_2, indices_rig_2_tuple)
-        
         # Assign data for next loop
         start_rig_1 = indices_rig_1
         start_rig_2 = indices_rig_2
-        prev_idx_rig_1 = indices_rig_1_tuple  # Update prev_idx with the current indices
-        prev_idx_rig_2 = indices_rig_2_tuple  # Update prev_idx with the current indices
+        resources[start_rig_1[0], start_rig_1[1]] -= 0.05
+        resources[start_rig_2[0], start_rig_2[1]] -= 0.05
     
     return days

@@ -1,9 +1,12 @@
 import React from "react";
 import HeatMap from "react-heatmap-grid";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
-const xLabels = new Array(100).fill(0).map((_, i) => `${i}`);
-const yLabels = new Array(100).fill(0).map((_, i) => `${i}`);
+const xLabels = new Array(100)
+  .fill(0)
+  .map((_, i) => (i % 10 === 0 ? `${i}` : ""));
+const yLabels = new Array(100)
+  .fill(0)
+  .map((_, i) => (i % 10 === 0 ? `${i}` : ""));
 
 const getColorBasedOnScore = (score) => {
   if (score === -200) {
@@ -20,7 +23,8 @@ const getColorBasedOnScore = (score) => {
 };
 
 const Heatmap = ({ data }) => {
-  const { initialPosRig1, initialPosRig2, finalPosRig1, finalPosRig2, scores } = data;
+  const { initialPosRig1, initialPosRig2, finalPosRig1, finalPosRig2, scores } =
+    data;
   const HeatmapLegend = () => {
     return (
       <div
@@ -80,45 +84,38 @@ const Heatmap = ({ data }) => {
   return (
     <div
       style={{
-        fontSize: "6px",
+        fontSize: "15px",
         alignItems: "center",
         display: "flex",
         flexDirection: "column",
       }}
     >
-       <TransformWrapper>
-      <TransformComponent>
-          <HeatMap
-            xLabels={xLabels}
-            yLabels={yLabels}
-            xLabelsLocation={"bottom"}
-            xLabelsVisibility={false}
-            yLabelsVisibility={false}
-            xLabelWidth={5}
-            data={scores}
-            squares
-            height={5}
-            cellStyle={(background, value, min, max, data, x, y) => {
-              const score = data[y][x];
-              const color = getColorBasedOnScore(score);
-              const isInitialPos = (y === initialPosRig1[0] && x === initialPosRig1[1]) || (y === initialPosRig2[0] && x === initialPosRig2[1]);
-              const isFinalPos = (y === finalPosRig1[0] && x === finalPosRig1[1]) || (y === finalPosRig2[0] && x === finalPosRig2[1]);
-              return {
-                background: isInitialPos
-                  ? "white"
-                  : isFinalPos
-                  ? "green"
-                  : color,
-                fontSize: "1px",
-                color: "#444",
-              };
-            }}
-            cellRender={(value) =>
-              value !== null ? <div>{value.toFixed(2)}</div> : null
-            }
-          />
-          </TransformComponent>
-          </TransformWrapper>
+      <HeatMap
+        xLabels={xLabels}
+        yLabels={yLabels}
+        xLabelsLocation={"bottom"}
+        data={scores}
+        squares
+        height={12}
+        cellStyle={(background, value, min, max, data, x, y) => {
+          const score = data[y][x];
+          const color = getColorBasedOnScore(score);
+          const isInitialPos =
+            (y === initialPosRig1[0] && x === initialPosRig1[1]) ||
+            (y === initialPosRig2[0] && x === initialPosRig2[1]);
+          const isFinalPos =
+            (y === finalPosRig1[0] && x === finalPosRig1[1]) ||
+            (y === finalPosRig2[0] && x === finalPosRig2[1]);
+          return {
+            background: isInitialPos ? "white" : isFinalPos ? "green" : color,
+            fontSize: "3px",
+            color: "#444",
+          };
+        }}
+        cellRender={(value) =>
+          value !== null ? <div>{value.toFixed(2)}</div> : null
+        }
+      />
       <HeatmapLegend />
     </div>
   );

@@ -30,8 +30,6 @@ front-end
   - npm install axios
 - heatmap
   - npm install react-heatmap-grid
-- pinch and zoom
-  - npm install react-zoom-pan-pinch
 
 # Compilation Instructions
 The code is written within 2 different frameworks.

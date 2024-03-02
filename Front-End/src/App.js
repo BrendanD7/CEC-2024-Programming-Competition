@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { TextField, Stack, CircularProgress, MenuItem, Typography } from "@mui/material";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import {
+  TextField,
+  Stack,
+  CircularProgress,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import "./App.css";
 import Heatmap from "./Heatmap";
 
@@ -41,35 +46,37 @@ export default function App() {
       <Typography variant="h2" component="h2">
         Offshore Drilling Management System
       </Typography>
-      <Stack spacing = {2} direction="row" alignItems="center">
+      <Stack spacing={2} direction="row" alignItems="center">
         <div className="chart-title">
-          <TextField
-            select
-            label="Select Day"
-            value={selectedDayNumber}
-            onChange={(e) => setSelectedDayNumber(e.target.value)}
-            sx={{
-              color: "white",
-              minWidth: "20vh",
-              marginBottom: "1vh",
-              marginTop: "1vh",
-              marginRight: "2vh",
-              backgroundColor: "white",
-            }}
-            variant="filled"
-          >
-            {Array.from({ length: 30 }, (_, index) => index + 1).map(
-              (number) => (
-                <MenuItem key={number} value={number.toString()}>
-                  {number}
-                </MenuItem>
-              )
-            )}
-          </TextField>
           {loading ? (
             <CircularProgress style={{ color: "white" }} />
           ) : (
-            <Heatmap data={scores[selectedDayNumber - 1]} />
+            <div>
+              <TextField
+                select
+                label="Select Day"
+                value={selectedDayNumber}
+                onChange={(e) => setSelectedDayNumber(e.target.value)}
+                sx={{
+                  color: "white",
+                  minWidth: "20vh",
+                  marginBottom: "1vh",
+                  marginTop: "1vh",
+                  marginRight: "2vh",
+                  backgroundColor: "white",
+                }}
+                variant="filled"
+              >
+                {Array.from({ length: 30 }, (_, index) => index + 1).map(
+                  (number) => (
+                    <MenuItem key={number} value={number.toString()}>
+                      {number}
+                    </MenuItem>
+                  )
+                )}
+              </TextField>
+              <Heatmap data={scores[selectedDayNumber - 1]} />
+            </div>
           )}
         </div>
       </Stack>
