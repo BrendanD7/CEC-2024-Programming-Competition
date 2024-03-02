@@ -50,7 +50,7 @@ const Heatmap = ({ data }) => {
         <span style={{ marginRight: "5px", fontSize: "13px" }}>Final</span>
         <div
           style={{
-            backgroundColor: "yellow",
+            backgroundColor: "orange",
             width: "50px",
             height: "50px",
             marginRight: "5px",
