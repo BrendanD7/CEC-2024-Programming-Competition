@@ -11,7 +11,9 @@ import "./App.css";
 import Heatmap from "./Heatmap";
 
 export default function App() {
+  // Define Variables
   const apiUrl = "http://127.0.0.1:5000/";
+  // Hooks
   const [selectedDayNumber, setSelectedDayNumber] = useState("1");
   const [loading, setLoading] = useState(true);
   const [scores, setScores] = useState(
@@ -20,13 +22,12 @@ export default function App() {
     )
   );
 
-  /** Method to Retrieve most recent data from the DB */
+  /** Method to Retrieve the Drilling Information */
   const fetchData = () => {
     axios
       .get(apiUrl)
       .then((response) => {
         setScores(response.data.data);
-        console.log(response.data.data);
       })
       .catch((error) => {
         alert("Error fetching data: " + error.message);

@@ -1,6 +1,4 @@
 # CEC-2024-Programming-Competition
-
-
 # Languages Used
 back-end
 - Python 3.10.7

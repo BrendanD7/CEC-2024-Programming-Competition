@@ -1,6 +1,7 @@
 import React from "react";
 import HeatMap from "react-heatmap-grid";
 
+// Define Labels for Heatmap
 const xLabels = new Array(100)
   .fill(0)
   .map((_, i) => (i % 10 === 0 ? `${i}` : ""));
@@ -8,19 +9,29 @@ const yLabels = new Array(100)
   .fill(0)
   .map((_, i) => (i % 10 === 0 ? `${i}` : ""));
 
+/** Retrieve the color for the heatmap based on the score */
 const getColorBasedOnScore = (score) => {
   if (score === -200) {
     return "black";
   } else if (score === -100) {
     return "red";
-  } else if (score < 0) {
+  } else  {
     return "orange";
-  } else if (score > 0) {
-    return "yellow";
-  } else {
-    return "green";
-  }
+  } 
 };
+
+/** Determine the alert message based on tge score */
+const determineMessage = (score) => {
+  if(score === -200){
+    return "(Out of Range)";
+  }
+  else if(score === -100){
+    return "(Invalid Position: Land or Missing Data)";
+  }
+  else{
+    return "(Valid Position)";
+  }
+}
 
 const Heatmap = ({ data }) => {
   const { initialPosRig1, initialPosRig2, finalPosRig1, finalPosRig2, scores } =
@@ -97,6 +108,7 @@ const Heatmap = ({ data }) => {
         data={scores}
         squares
         height={12}
+        onClick={(y, x) => alert(`Coordinates X: ${x}, Y: ${y} \nValue: ${scores[x][y] + " " + determineMessage(scores[x][y])}`)}
         cellStyle={(background, value, min, max, data, x, y) => {
           const score = data[y][x];
           const color = getColorBasedOnScore(score);
