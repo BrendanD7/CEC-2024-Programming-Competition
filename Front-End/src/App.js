@@ -44,7 +44,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <Typography variant="h2" component="h2">
+      <Typography variant="h2" component="h2" style={{fontFamily: "Helvetica Noue"}}>
         Offshore Drilling Management System
       </Typography>
       <Stack spacing={2} direction="row" alignItems="center">

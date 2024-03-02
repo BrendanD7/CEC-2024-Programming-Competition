@@ -16,7 +16,7 @@ const getColorBasedOnScore = (score) => {
   } else if (score === -100) {
     return "red";
   } else  {
-    return "orange";
+    return "yellow";
   } 
 };
 
@@ -49,25 +49,25 @@ const Heatmap = ({ data }) => {
             marginRight: "5px",
           }}
         ></div>
-        <span style={{ marginRight: "5px", fontSize: "13px" }}>Initial</span>
+        <span style={{ marginRight: "5px", fontSize: "13px", fontFamily: "Helvetica Noue"}}>Initial</span>
         <div
           style={{
-            backgroundColor: "green",
+            backgroundColor: "darkblue",
             width: "50px",
             height: "50px",
             marginRight: "5px",
           }}
         ></div>
-        <span style={{ marginRight: "5px", fontSize: "13px" }}>Final</span>
+        <span style={{ marginRight: "5px", fontSize: "13px", fontFamily: "Helvetica Noue"}}>Final</span>
         <div
           style={{
-            backgroundColor: "orange",
+            backgroundColor: "yellow",
             width: "50px",
             height: "50px",
             marginRight: "5px",
           }}
         ></div>
-        <span style={{ marginRight: "5px", fontSize: "13px" }}>Valid</span>
+        <span style={{ marginRight: "5px", fontSize: "13px",  fontFamily: "Helvetica Noue" }}>Valid</span>
         <div
           style={{
             backgroundColor: "red",
@@ -76,7 +76,7 @@ const Heatmap = ({ data }) => {
             marginRight: "5px",
           }}
         ></div>
-        <span style={{ marginRight: "5px", fontSize: "13px" }}>Invalid</span>
+        <span style={{ marginRight: "5px", fontSize: "13px",  fontFamily: "Helvetica Noue" }}>Invalid</span>
         <div
           style={{
             backgroundColor: "black",
@@ -85,7 +85,7 @@ const Heatmap = ({ data }) => {
             marginRight: "5px",
           }}
         ></div>
-        <span style={{ marginRight: "5px", fontSize: "13px" }}>
+        <span style={{ marginRight: "5px", fontSize: "13px",  fontFamily: "Helvetica Noue" }}>
           Out of Bounds
         </span>
       </div>
@@ -96,6 +96,7 @@ const Heatmap = ({ data }) => {
     <div
       style={{
         fontSize: "15px",
+        fontFamily: "Helvetica Noue",
         alignItems: "center",
         display: "flex",
         flexDirection: "column",
@@ -119,8 +120,9 @@ const Heatmap = ({ data }) => {
             (y === finalPosRig1[0] && x === finalPosRig1[1]) ||
             (y === finalPosRig2[0] && x === finalPosRig2[1]);
           return {
-            background: isInitialPos ? "white" : isFinalPos ? "green" : color,
+            background: isInitialPos ? "white" : isFinalPos ? "darkblue" : color,
             fontSize: "3px",
+            fontFamily: "Helvetica Noue",
             color: "#444",
           };
         }}
