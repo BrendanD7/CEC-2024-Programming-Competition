@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { TextField, Stack, CircularProgress, MenuItem } from "@mui/material";
+import { TextField, Stack, CircularProgress, MenuItem, Typography } from "@mui/material";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import "./App.css";
 import Heatmap from "./Heatmap";
 
@@ -33,21 +34,25 @@ export default function App() {
   /** On initialization, retrieve the most recent data */
   useEffect(() => {
     fetchData();
-  }, []); // Run once on mount
+  }, []);
 
   return (
     <div className="App">
-      <Stack spacing={2} direction="row" alignItems="center" marginTop="2vh">
+      <Typography variant="h2" component="h2">
+        Offshore Drilling Management System
+      </Typography>
+      <Stack spacing = {2} direction="row" alignItems="center">
         <div className="chart-title">
           <TextField
             select
-            label="Select Date"
+            label="Select Day"
             value={selectedDayNumber}
             onChange={(e) => setSelectedDayNumber(e.target.value)}
             sx={{
               color: "white",
               minWidth: "20vh",
-              marginTop: "2vh",
+              marginBottom: "1vh",
+              marginTop: "1vh",
               marginRight: "2vh",
               backgroundColor: "white",
             }}
@@ -61,7 +66,6 @@ export default function App() {
               )
             )}
           </TextField>
-          <h2>Resource Scores</h2>
           {loading ? (
             <CircularProgress style={{ color: "white" }} />
           ) : (

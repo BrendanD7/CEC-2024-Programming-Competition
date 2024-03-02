@@ -86,6 +86,8 @@ const Heatmap = ({ data }) => {
         flexDirection: "column",
       }}
     >
+       <TransformWrapper>
+      <TransformComponent>
           <HeatMap
             xLabels={xLabels}
             yLabels={yLabels}
@@ -115,6 +117,8 @@ const Heatmap = ({ data }) => {
               value !== null ? <div>{value.toFixed(2)}</div> : null
             }
           />
+          </TransformComponent>
+          </TransformWrapper>
       <HeatmapLegend />
     </div>
   );

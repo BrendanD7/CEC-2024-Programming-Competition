@@ -1,12 +1,54 @@
 # CEC-2024-Programming-Competition
 
+
+# Languages Used
+back-end
+- Python 3.10.7
+front-end 
+- React
+  - With code written in JavaScript
+
+# Packages Required
+back-end
+- pandas
+  - pip install pandas
+- numpy
+  - pip install numpy
+- flask
+  - pip install flask
+- flask_api
+  - pip install flask_api
+- flask_cors
+  - pip install flask_cors
+  
+front-end
+- React
+  - npm install react
+- Material-UI
+  - npm install @mui/material
+- axios
+  - npm install axios
+- heatmap
+  - npm install react-heatmap-grid
+- pinch and zoom
+  - npm install react-zoom-pan-pinch
+
+# Compilation Instructions
+The code is written within 2 different frameworks.
+In the back-end folder, we have a Flask Server in Python.
+- To run this, navigate into the back-end folder and run `python main.py` which should open a localhost server.
+In the front-end folder, we have a React Website.
+- To run this, navigate into the front-end folder and run `npm start` which should open the website within a server.
+
+
+
 Welcome to the CEC 2024 Programming Competition! Everything you need is in this Github, and we recommend the following steps to get started:
 1. Read the rest of this README.md
-1. Read the tutorial linked in githubHowToUseGithubDesktop.txt 
-1. Read the tutorial linked in githubHowToFork.txt
-1. Fork this repo
-1. Clone your forked repo locally on your machine
-1. Start coding!
+2. Read the tutorial linked in githubHowToUseGithubDesktop.txt 
+3. Read the tutorial linked in githubHowToFork.txt
+4. Fork this repo
+5. Clone your forked repo locally on your machine
+6. Start coding!
 
 ## Getting Help
 

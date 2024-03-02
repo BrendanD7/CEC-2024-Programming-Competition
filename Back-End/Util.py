@@ -6,6 +6,7 @@ def calculate_score(data):
     # Data is empty, return invalid
     if(data.empty):
         return -100
+    
     # Retrieve values from Data
     value_world = data['value_world'].values[0]
     value_oil = data['value_oil'].values[0]
@@ -13,12 +14,15 @@ def calculate_score(data):
     value_species = data['value_species'].values[0]
     value_coral = data['value_coral'].values[0]
     value_temperature = data['value_temperature'].values[0]
+    
     # If any values arent provided, return invalid 
     if(any(pd.isna(val) for val in [value_world, value_oil, value_species, value_temperature, value_metal, value_coral])):
         return -100
+    
     # If the position is land, return invalid
     if(value_world == 1):
         return -100
+    
     # Assign Weights to values
     weight_species = 0.30
     weight_coral = 0.15
@@ -31,7 +35,7 @@ def calculate_score(data):
     return score
 
 # Method to find the score of all positions, and return the best position
-def find_best_position(data, start, scores):
+def find_best_position(data, start, scores, other_rig):
     max_movement = 5
     max_score = -1000
     max_indices = start
@@ -40,7 +44,8 @@ def find_best_position(data, start, scores):
         for j in range(100):
             # Check if more than five away from start pos
             distance = abs(start[0] - i) + abs(start[1] - j)
-            if distance <= max_movement:
+            rig_distance = abs(other_rig[0] - i) + abs(other_rig[1] - j)
+            if distance <= max_movement and rig_distance > 2:
                 # Calculate the score for this position
                 data_parse = data[(data['x'] == i) & (data['y'] == j)]
                 score = calculate_score(data_parse)
@@ -111,8 +116,8 @@ def read_files():
 
         # Calculate the best position for the current map
         scores = np.full((100, 100), -200.00, dtype=float)
-        indices_rig_1 = find_best_position(combined_data, start_rig_1, scores)
-        indices_rig_2 = find_best_position(combined_data, start_rig_2, scores)
+        indices_rig_1 = find_best_position(combined_data, start_rig_1, scores, start_rig_2)
+        indices_rig_2 = find_best_position(combined_data, start_rig_2, scores, indices_rig_1)
         
         # Create data for API
         scores_list = scores.astype(float).tolist()
@@ -140,5 +145,3 @@ def read_files():
         prev_idx_rig_2 = indices_rig_2_tuple  # Update prev_idx with the current indices
     
     return days
-
-read_files()
